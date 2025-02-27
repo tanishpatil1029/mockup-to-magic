@@ -13,6 +13,7 @@ import Cars from "./pages/Cars";
 import ParkingDetails from "./pages/ParkingDetails";
 import Booking from "./pages/Booking";
 import BookingSuccess from "./pages/BookingSuccess";
+import Profile from "./pages/Profile";
 import { ThemeProvider } from "./context/ThemeContext";
 import { ParkingProvider } from "./context/ParkingContext";
 
@@ -35,6 +36,7 @@ const App = () => (
               <Route path="/booking/new" element={<Booking />} />
               <Route path="/booking-success/:id" element={<BookingSuccess />} />
               <Route path="/bookings" element={<Booking />} />
+              <Route path="/profile" element={<Profile />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

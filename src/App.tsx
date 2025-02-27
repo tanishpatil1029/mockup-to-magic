@@ -14,6 +14,7 @@ import ParkingDetails from "./pages/ParkingDetails";
 import Booking from "./pages/Booking";
 import BookingSuccess from "./pages/BookingSuccess";
 import Profile from "./pages/Profile";
+import MapPage from "./pages/Map";
 import { ThemeProvider } from "./context/ThemeContext";
 import { ParkingProvider } from "./context/ParkingContext";
 
@@ -37,6 +38,7 @@ const App = () => (
               <Route path="/booking-success/:id" element={<BookingSuccess />} />
               <Route path="/bookings" element={<Booking />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/map" element={<MapPage />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

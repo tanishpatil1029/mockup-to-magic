@@ -1,15 +1,17 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "@/components/layout/Header";
 import BottomNavigation from "@/components/layout/BottomNavigation";
 import ParkingMap from "@/components/common/ParkingMap";
 import ParkingSpotCard from "@/components/common/ParkingSpot";
 import { useParkingContext } from "@/context/ParkingContext";
+import { useGoogleMaps, GoogleMapComponent } from "@/context/GoogleMapsContext";
 import { Search, MapPin, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const Home = () => {
   const { parkingSpots } = useParkingContext();
+  const { markers, addMarker, clearMarkers } = useGoogleMaps();
   const [searchQuery, setSearchQuery] = useState("");
   const [viewMode, setViewMode] = useState<"list" | "map">("list");
 
@@ -18,6 +20,29 @@ const Home = () => {
     spot.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     spot.location.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  useEffect(() => {
+    // When component mounts, clear existing markers and add markers for parking spots
+    clearMarkers();
+    
+    // Add parking spots as markers (using mock coordinates for demonstration)
+    filteredSpots.forEach((spot, index) => {
+      // Generate some random coordinates around a center point for demo purposes
+      const lat = 40.7128 + (Math.random() - 0.5) * 0.05;
+      const lng = -74.0060 + (Math.random() - 0.5) * 0.05;
+      
+      addMarker({ lat, lng });
+    });
+  }, [filteredSpots, addMarker, clearMarkers]);
+
+  // Convert parking spots to map markers
+  const parkingMarkers = filteredSpots.map((spot, index) => {
+    // Generate some random coordinates around a center point for demo
+    const lat = 40.7128 + (Math.random() - 0.5) * 0.05;
+    const lng = -74.0060 + (Math.random() - 0.5) * 0.05;
+    
+    return { lat, lng };
+  });
 
   return (
     <div className="min-h-screen pb-16 bg-background">
@@ -68,7 +93,11 @@ const Home = () => {
       {/* Map View */}
       {viewMode === "map" && (
         <div className="px-4 mb-4">
-          <ParkingMap className="h-[500px] rounded-xl mb-4" />
+          <GoogleMapComponent 
+            markers={parkingMarkers} 
+            className="h-[500px] rounded-xl mb-4" 
+            zoom={14}
+          />
         </div>
       )}
 
@@ -83,7 +112,13 @@ const Home = () => {
             </div>
             
             {/* Map Preview */}
-            <ParkingMap className="h-[180px] rounded-xl mb-4" />
+            <div className="h-[180px] rounded-xl mb-4 overflow-hidden">
+              <GoogleMapComponent 
+                markers={parkingMarkers.slice(0, 3)} 
+                className="h-full w-full" 
+                zoom={13}
+              />
+            </div>
             
             {/* Parking Spots List */}
             <div className="space-y-4 mt-6">

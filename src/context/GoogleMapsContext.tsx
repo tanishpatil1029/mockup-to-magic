@@ -98,9 +98,14 @@ export const GoogleMapComponent = ({
   onClick,
   className = ''
 }: GoogleMapComponentProps) => {
+  // Create a local handleLoad function
+  const handleMapLoad = () => {
+    console.log("Google Maps loaded successfully");
+  };
+
   return (
     <div className={`relative ${className}`} style={{ minHeight: '300px' }}>
-      <LoadScript googleMapsApiKey={GOOGLE_MAPS_API_KEY} onLoad={handleLoad}>
+      <LoadScript googleMapsApiKey={GOOGLE_MAPS_API_KEY} onLoad={handleMapLoad}>
         <GoogleMap
           mapContainerStyle={containerStyle}
           center={center}

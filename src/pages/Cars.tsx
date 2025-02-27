@@ -12,11 +12,16 @@ const CarsPage = () => {
   const [isAddingCar, setIsAddingCar] = useState(false);
   const [editingCar, setEditingCar] = useState<Car | null>(null);
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{
+    name: string;
+    licensePlate: string;
+    color: string;
+    type: "sedan" | "suv" | "hatchback";
+  }>({
     name: "",
     licensePlate: "",
     color: "#000000",
-    type: "sedan" as const,
+    type: "sedan",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -29,7 +34,7 @@ const CarsPage = () => {
       name: "",
       licensePlate: "",
       color: "#000000",
-      type: "sedan" as const,
+      type: "sedan",
     });
   };
 
